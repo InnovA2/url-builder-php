@@ -12,7 +12,7 @@ class UrlBuilder
     private ArrayCollection $params;
     private ArrayCollection $query;
 
-    public function __construct()
+    function __construct()
     {
         $this->paths = new ArrayCollection();
         $this->params = new ArrayCollection();
@@ -65,22 +65,22 @@ class UrlBuilder
         return ($relative && $url->getRelativePath() === $this->getRelativePath()) || (!$relative && $url->toString() === $this->toString());
     }
 
-    public function getScheme(): string
+    function getScheme(): string
     {
         return $this->scheme;
     }
 
-    public function getHost(): string
+    function getHost(): string
     {
         return $this->host;
     }
 
-    public function getPort(): int
+    function getPort(): int
     {
         return $this->port;
     }
 
-    public function getPaths(): array
+    function getPaths(): array
     {
         return $this->paths->toArray();
     }
@@ -91,54 +91,64 @@ class UrlBuilder
         return $this;
     }
 
-    function addPath(string $path): UrlBuilder {
+    function addPath(string $path): UrlBuilder
+    {
         foreach (self::splitPath($path) as $item) {
             $this->paths->add($item);
         }
         return $this;
     }
 
-    function addParam(string $key, $value): UrlBuilder {
+    function addParam(string $key, $value): UrlBuilder
+    {
         $this->params->set($key, $value);
         return $this;
     }
 
-    function addParams(array $params): UrlBuilder {
+    function addParams(array $params): UrlBuilder
+    {
         foreach ($params as $key => $value) {
             $this->params->set($key, $value);
         }
         return $this;
     }
 
-    function getParams(): array {
+    function getParams(): array
+    {
         return $this->params->toArray();
     }
 
-    function addQuery(string $key, $value): UrlBuilder {
+    function addQuery(string $key, $value): UrlBuilder
+    {
         $this->query->set($key, $value);
         return $this;
     }
 
-    function addQueries(array $queries): UrlBuilder {
+    function addQueries(array $queries): UrlBuilder
+    {
         foreach ($queries as $key => $value) {
             $this->query->set($key, $value);
         }
         return $this;
     }
 
-    function getQuery(): array {
+    function getQuery(): array
+    {
         return $this->query->toArray();
     }
 
-    function getFirstPath(): string {
+    function getFirstPath(): string
+    {
         return $this->paths->first();
     }
 
-    function getLastPath(): string {
+    function getLastPath(): string
+    {
         return $this->paths->last();
     }
 
-    function getParent(int $n = 1): UrlBuilder {
+    function getParent(int $n = 1): UrlBuilder
+    {
         $parent = clone $this;
         $lastPath = $parent->getLastPath();
 
@@ -156,7 +166,8 @@ class UrlBuilder
         return $n > 1 ? $parent->getParent($n - 1) : $parent;
     }
 
-    function getBetween2Words(string $a, string $b): ?string {
+    function getBetween2Words(string $a, string $b): ?string
+    {
         $indexA = $this->paths->indexOf($a);
         $indexB = $this->paths->indexOf($b);
 
@@ -168,7 +179,8 @@ class UrlBuilder
         return count($paths) ? $paths[0] : null;
     }
 
-    function getRelativePath(bool $query = false): string {
+    function getRelativePath(bool $query = false): string
+    {
         $paths = [];
 
         foreach ($this->paths as $path) {
@@ -186,7 +198,8 @@ class UrlBuilder
         return $query && $queryString ? ($relativePath . $queryString) : $relativePath;
     }
 
-    function getQueryString(): ?string {
+    function getQueryString(): ?string
+    {
         $queryParams = [];
 
         foreach ($this->query as $key => $value) {
@@ -196,7 +209,8 @@ class UrlBuilder
         return count($queryParams) ? ('?' . implode('&', $queryParams)) : null;
     }
 
-    function toString(): string {
+    function toString(): string
+    {
         $baseUrl = $this->host ? implode('://', [$this->scheme, $this->host]) : '';
 
         if ($this->port) {
