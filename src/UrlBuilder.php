@@ -139,15 +139,18 @@ class UrlBuilder
     }
 
     function getParent(int $n = 1): UrlBuilder {
-        $parent = self::createFromUrl($this->toString());
+        $parent = clone $this;
         $lastPath = $parent->getLastPath();
 
         $parent->paths = $parent->paths->filter(function ($p) use ($lastPath) {
             return $p !== $lastPath;
         });
+
+        $lastPath = str_replace(':', '', $lastPath);
         $parent->params = $parent->params->filter(function ($p) use ($lastPath) {
-            return $p !== str_replace(':', '', $lastPath);
+            return $p !== $lastPath;
         });
+
         $parent->query = new ArrayCollection();
 
         return $n > 1 ? $parent->getParent($n - 1) : $parent;

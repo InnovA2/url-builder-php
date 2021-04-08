@@ -31,6 +31,8 @@ final class UrlBuilderTest extends TestCase
         $this->url = UrlBuilder::createFromUrl(self::URL_USERS_PAGINATED_WITH_PORT)->addQuery('order', 'DESC');
 
         self::assertEquals(self::URL_USERS_PAGINATED_WITH_PORT . '&order=DESC', $this->url->toString());
+        self::assertEquals('https', $this->url->getScheme());
+        self::assertEquals('localhost', $this->url->getHost());
     }
 
     /**
@@ -65,6 +67,7 @@ final class UrlBuilderTest extends TestCase
         $this->url = UrlBuilder::createFromUrl(self::URL_USERS_PAGINATED)->setPort(3000);
 
         self::assertEquals(self::URL_USERS_PAGINATED_WITH_PORT, $this->url->toString());
+        self::assertEquals(3000, $this->url->getPort());
     }
 
     /**
@@ -197,6 +200,7 @@ final class UrlBuilderTest extends TestCase
     {
         $this->url->addPath('users/:id/comments')->addParam('id', 10);
 
+        self::assertEquals(['users', ':id', 'comments'], $this->url->getPaths());
         self::assertEquals(self::PATH_USER_COMMENTS, $this->url->getRelativePath());
     }
 
