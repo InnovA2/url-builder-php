@@ -1,4 +1,5 @@
 # Url-Builder
+
 ![Coverage](coverage/badge.svg)
 
 A lightweight library with many features to easy build URLs
