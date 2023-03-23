@@ -35,7 +35,9 @@ class UrlBuilder
             $url->port = $components['port'];
         }
 
-        $url->paths = new ArrayCollection(self::splitPath($components['path']));
+        if (array_key_exists('path', $components)) {
+            $url->paths = new ArrayCollection(self::splitPath($components['path']));
+        }
 
         if (array_key_exists('query', $components)) {
             foreach (explode('&', $components['query']) as $q) {
