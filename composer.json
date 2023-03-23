@@ -1,7 +1,7 @@
 {
     "name": "innova2/url-builder",
     "description": "A lightweight PHP 7.4+ library with many features to easy build URLs",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "homepage": "https://github.com/InnovA2/url-builder-php",
     "license": "MIT",
     "keywords": [
